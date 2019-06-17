@@ -1,0 +1,14 @@
+table {
+  margin: 20px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+th {
+  font-weight: 900;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}

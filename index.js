@@ -3,7 +3,7 @@ const express = require('express'),
 
 const app = express();
 
-const staticTopTen = [
+const movies = [
   {"title": "Schindler's List",
    "year": "1993"},
   {"title": "Wonder Woman",
@@ -26,23 +26,93 @@ const staticTopTen = [
    "year": "2017"}
 ];
 
+const genres = [
+  {"name": "drama",
+   "description": "Deep character conflict often never resolved."},
+  {"name": "action",
+   "description": "Characters acting without thinking, and somehow it works after things blow up."},
+  {"name": "romantic comedy",
+   "desciption": "Silly characters woo one another until they run out of reasons to say No to each other."}
+];
+
+const directors = [
+  {"name":"Steven Spielberg",
+   "bio":"An American filmmaker consider one of the founding pioneers of the New Hollywood era.",
+   "birthYear":"1946",
+   "deathYear":"na"},
+  {"name":"Guillermo del Toro",
+   "bio":"A Mexican filmmaker, author, and actor known for his Academy Award winning films Pan's Labyrinth and The Shape of Water",
+   "birthYear":"1964",
+   "deathYear":"na"},
+  {"name":"Sir Charles Spencer Chaplin",
+   "bio":"An English comic actor, filmmaker, and composer who rose to fame in the era of silent films.",
+   "birthYear":"1889",
+   "deathYear":"1977"},
+  {"name":"Greg Berlanti",
+   "bio":"An American writer, producer, and film director",
+   "birthYear":"1972",
+   "deathYear":"na"}
+];
+
 app.use(morgan('common'));
+app.use(express.static('public'));
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 app.get('/movies', function(req, res){
-  res.json(staticTopTen)
+  res.json(movies)
+});
+
+app.get('/movies/:title', (req, res) => {
+  res.json(movies.find( (movie) =>
+  { return movie.title === req.params.title }));
+});
+
+app.get('/genres', (req, res) => {
+  res.json(genres)
+});
+
+app.get('/genres/:name', (req, res) => {
+  res.json(genres.find( (genre) =>
+  { return genre.name === req.params.name }));
+});
+
+app.get('/directors', (req, res) => {
+  res.json(directors)
+});
+
+app.get('/directors/:name', (req, res) => {
+  res.json(directors.find( (director) =>
+  { return director.name === req.params.name }));
 });
 
 app.get('/', function(req, res){
   res.send('Welcome to Reel Creations API')
 });
 
-app.use(express.static('public'));
+app.post('/users', (req, res) => {
+  res.send('We are working on posting users to the list.  It will be available soon.')
+});
+
+app.put('/users', (req, res) => {
+  res.send('We are working on updating user info.  It will be available soon.')
+});
+
+app.post('/users/:id/:title', (req, res) => {
+  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+});
+
+app.delete('/users/:id/:title', (req, res) => {
+  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+});
+
+app.delete('/users/:id', (req, res) => {
+  res.send('We are working on deleting users.  In the meantime you are eternal ours. Mwahahahahahaha! RE: ' + req.params.id)
+});
 
 app.listen(8080, () =>
   console.log('Your app is listening on port 8080.')
 );
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
