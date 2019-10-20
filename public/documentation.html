@@ -3,6 +3,14 @@
 <head>
   <title>API Endpoints</title>
   <!--<link rel="stylesheet" type="text/css" href="css/main.css">  Something to figure out later -->
+  <style type="text/css">
+      td, th {
+          padding: 10px;
+      }
+      tr {
+          background-color: #faeec2;
+      }
+  </style>
 </head>
 
 <body>
@@ -11,90 +19,122 @@
 <br>
 <h2>Endpoints</h2>
 <table style="margin: 20px; padding: 10px; border: 1px solid black">
-  <tr>
-    <th>Business Logic</th>
-    <th>URL</th>
-    <th>HTTP Method</th>
-    <th>Request body data format</th>
-    <th>Response body data format</th>
-  </tr>
-  <tr>
-    <td>Return a full list of all movies</td>
-    <td>/movies</td>
-    <td>GET</td>
-    <td>None</td>
-    <td>JSON object of all movies and their keys</td>
-  </tr>
-  <tr>
-    <td>Return information on a single movie</td>
-    <td>/movies/[title]</td>
-    <td>GET</td>
-    <td>None</td>
-    <td>JSON object with keys:  title, description, genre, director, imageURL, featured(bool)</td>
-  </tr>
-  <tr>
-    <td>Return a full list of genres</td>
-    <td>/genres</td>
-    <td>GET</td>
-    <td>JSON objects of all genres and their keys</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Return information on a single genre</td>
-    <td>/genres/[name]</td>
-    <td>GET</td>
-    <td>JSON object with keys:  name, description</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Return a full list of directors</td>
-    <td>/directors</td>
-    <td>GET</td>
-    <td>None</td>
-    <td>JSON object of all directors and their keys</td>
-  </tr>
-  <tr>
-    <td>Return information on a single director</td>
-    <td>/directors/[name]</td>
-    <td>GET</td>
-    <td>None</td>
-    <td>JSON object with keys:  name, bio, birthYear, deathYear</td>
-  </tr>
-  <tr>
-    <td>Register a new user</td>
-    <td>/users</td>
-    <td>POST</td>
-    <td>JSON object with keys: id, username, password, email, dob, favorites(array)</td>
-    <td>confirmation message: reiterating info submitted</td>
-  </tr>
-  <tr>
-    <td>Update a user's information</td>
-    <td>/users</td>
-    <td>PUT</td>
-    <td>JSON object with keys: id, username, password, email, dob, favorites(array)</td>
-    <td>confirmation message: reiterating info submitted</td>
-  </tr>
-  <tr>
-    <td>Add a movie to a user's favorite list</td>
-    <td>/users/[id]/[title]</td>
-    <td>POST</td>
-    <td>None</td>
-    <td>confirmation message: reiterating info submitted</td>
-  </tr>
-  <tr>
-    <td>Remove a movie from a user's favorite list</td>
-    <td>/users/[id]/[title]</td>
-    <td>DELETE</td>
-    <td>None</td>
-    <td>confirmation message: reiterating info submitted</td>
-  </tr>
-  <tr>
-    <td>Unregister a user</td>
-    <td>/users/[id]</td>
-    <td>DELETE</td>
-    <td>None</td>
-    <td>confirmation message: reiterating info submitted</td>
-  </tr>
+    <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request body data format</th>
+        <th>Response body data format</th>
+    </tr>
+    <tr>
+        <td>Return a full list of all movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object of all movies and their keys</td>
+    </tr>
+    <tr>
+        <td>Add a new Movie to the database</td>
+        <td>/Movies</td>
+        <td>POST</td>
+        <td>
+            JSON object with keys: title, description, genre, director, image_path, actors(array)<br />example:  <code>
+            {"title" : "Schindler's List",
+            "description" : "1993 World War II Movie about Schindler",
+            "genre" :  "5d1a54e098397de8da1fc574",
+            "director" : "5d1a56dd98397de8da1fc577",
+            "image_path" : "SchindlersList1993.jpg",
+            "featured" : true,
+            "actors" : ["Liam Neeson", "Ben Kingsley"]
+            }
+        </code>
+        </td>
+        <td>confirmation message: reiterating info submitted</td>
+    </tr>
+    <tr>
+        <td>Return information on a single movie</td>
+        <td>/movies/[title]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object with keys:  title, description, genre, director, imageURL, featured(bool)</td>
+    </tr>
+    <tr>
+        <td>Return a full list of genres</td>
+        <td>/genres</td>
+        <td>GET</td>
+        <td>JSON objects of all genres and their keys</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Return information on a single genre</td>
+        <td>/genres/[name]</td>
+        <td>GET</td>
+        <td>JSON object with keys:  name, description</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Return a full list of directors</td>
+        <td>/directors</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object of all directors and their keys</td>
+    </tr>
+    <tr>
+        <td>Return information on a single director</td>
+        <td>/directors/[name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON object with keys:  name, bio, birthYear, deathYear</td>
+    </tr>
+    <tr>
+        <td>Register a new user</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>
+            JSON object with keys: id, username, password, email, dob, favorites(array)<br />example:  <code>
+                {
+                "username":"jpjones",
+                "name":"John Paul Jones",
+                "password":"thereandbackagain123",
+                "email":"jpjones@notmadeup.com",
+                "birth_date":"1991-02-14",
+                "favorites":[
+                "Wonder%20Woman",
+                "Saving%20Private%30Ryan"
+                ]
+                }
+            </code>
+        </td>
+        <td>confirmation message: reiterating info submitted</td>
+    </tr>
+    <tr>
+        <td>Update a user's information</td>
+        <td>/users</td>
+        <td>PUT</td>
+        <td>JSON object with keys: id, username, password, email, dob, favorites(array)</td>
+        <td>confirmation message: reiterating info submitted</td>
+    </tr>
+    <tr>
+        <td>Add a movie to a user's favorite list</td>
+        <td>/users/[id]/[title]</td>
+        <td>POST</td>
+        <td>None</td>
+        <td>confirmation message: reiterating info submitted</td>
+    </tr>
+    <tr>
+        <td>Remove a movie from a user's favorite list</td>
+        <td>/users/[id]/[title]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>confirmation message: reiterating info submitted</td>
+    </tr>
+    <tr>
+        <td>Unregister a user</td>
+        <td>/users/[id]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>confirmation message: reiterating info submitted</td>
+    </tr>
 </table>
 </body>
 

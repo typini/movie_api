@@ -1,7 +1,17 @@
 const express = require('express'),
-  morgan = require('morgan');
+  morgan = require('morgan'),
+  mongoose = require('mongoose'),
+  Models = require('./models.js'),
+  bodyParser = require('body-parser');
 
 const app = express();
+
+const Movies = Models.Movie,
+  Users = Models.User,
+  Directors = Models.Director,
+  Genres = Models.Genre;
+
+mongoose.connect('mongodb://localhost:27017/ReelCreationsDB', {useNewUrlParser: true});
 
 const movies = [
   {"title": "Schindler's List",
@@ -56,6 +66,7 @@ const directors = [
 
 app.use(morgan('common'));
 app.use(express.static('public'));
+app.use(bodyParser.json());
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
@@ -92,8 +103,94 @@ app.get('/', function(req, res){
   res.send('Welcome to Reel Creations API')
 });
 
+
+app.get('/users', (req, res) => {
+  Users.find()
+  .then(function(users) {
+    res.status(201).json(users)
+  })
+  .catch(function(err) {
+    console.error(err);
+    res.status(500).send('Error: ' + error);
+  });
+});
+
+app.get('/users/:username', (req, res) => {
+  Users.findOne({username : req.params.username })
+  .then(function(user){
+    res.json(user);
+  })
+  .catch(function(err) {
+    console.error(err);
+    res.status(500).send('Error: ' + error);
+  });
+});
+
+/* JSON format expected:
+  {
+    ID: Integer,
+    username: String,
+    name: String,
+    password: String,
+    email: String,
+    birth_date: Date
+  }
+*/
 app.post('/users', (req, res) => {
-  res.send('We are working on posting users to the list.  It will be available soon.')
+  //OLD res.send('We are working on posting users to the list.  It will be available soon.')
+//  Users.findOne({ 'username' : req.body.username})
+  Users.findOne({'name' : req.body.name})
+  .then(function(user) {
+    if (user) {
+      return res.status(400).send(req.body.username + ' already exists.');
+    } else {
+      Users
+      .create({
+        username: req.body.username,
+        name: req.body.name,
+        password: req.body.password,
+        email: req.body.email,
+        birth_date: req.body.birth_date
+      })
+      .then(function(user) {res.status(201).json(user) })
+      .catch(function(error){
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      })
+    }
+  }).catch(function(error) {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
+});
+
+app.post('/movies', (req, res) => {
+    //res.send('We are working on posting movies to the list.  This feature will be available soon.');
+    Movies.findOne({ 'title': req.body.title })
+    .then(function (movie) {
+        if (movie) {
+            return res.status(400).send(req.body.title + ' already exists.');
+        } else {
+            Movies
+                .create({
+                    title: req.body.title,
+                    description: req.body.description,
+                    genre: req.body.genre,
+                    director: req.body.director,
+                    actors: req.body.actors,
+                    image_path: req.body.image_path,
+                    featured: req.body.featured
+                })
+                .then(function (movie) { res.status(201).json(movie) })
+                .catch(function (error) {
+                    console.error(error);
+                    res.status(500).send('Error: ' + error);
+                })
+        }
+    }).catch(function (error) {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+    });
 });
 
 app.put('/users', (req, res) => {
