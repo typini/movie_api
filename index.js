@@ -2,7 +2,10 @@ const express = require('express'),
   morgan = require('morgan'),
   mongoose = require('mongoose'),
   Models = require('./models.js'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  passport = require('passport');
+
+require('./passport');
 
 const app = express();
 
@@ -67,13 +70,21 @@ const directors = [
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
+var auth = require('./auth')(app);
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
-app.get('/movies', function(req, res){
-  res.json(movies)
+app.get('/movies', passport.authenticate('jwt', {session: false}), function(req, res){
+//  res.json(movies)
+  Movies.find()
+    .then(function(movies){
+      res.status(201).json(movies);
+    }).catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
 app.get('/movies/:title', (req, res) => {
