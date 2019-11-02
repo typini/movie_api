@@ -248,7 +248,12 @@ app.delete('/users/:id', (req, res) => {
   res.send('We are working on deleting users.  In the meantime you are eternal ours. Mwahahahahahaha! RE: ' + req.params.id)
 });
 
+/*
 app.listen(8080, () =>
   console.log('Your app is listening on port 8080.')
-);
+);*/
 
+let port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+  console.log("Listening on Port 3000");
+});
