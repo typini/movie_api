@@ -1,13 +1,32 @@
 const express = require('express'),
+  cors = require('cors');
   morgan = require('morgan'),
   mongoose = require('mongoose'),
   Models = require('./models.js'),
   bodyParser = require('body-parser'),
   passport = require('passport');
 
+const { check, validationResult } = require('express-validator');
+
 require('./passport');
 
 const app = express();
+app.use(cors());  //further defined below.
+
+/*
+let allowedOrigins = ['http://localhost:8080', 'http://www.tyreepini.com/'];
+
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) == -1){
+      let message = "The CORS policy for this application doesn't allow access from origin ' + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+});
+*/
 
 const Movies = Models.Movie,
   Users = Models.User,
@@ -147,10 +166,19 @@ app.get('/users/:username', (req, res) => {
     birth_date: Date
   }
 */
-app.post('/users', (req, res) => {
+app.post('/users',
   //OLD res.send('We are working on posting users to the list.  It will be available soon.')
 //  Users.findOne({ 'username' : req.body.username})
-  Users.findOne({'name' : req.body.name})
+  [check('username', 'Username of 3 or more characters is required').isLength({min: 3}),
+  check('username', 'Username contains non alphanumeric character - not allowed.').isAlphanumeric(),
+  check('password', 'password is required').not().isEmpty(),
+  check('email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()){
+      return res.status(422).json({errors: errors.array() });
+    }
+  let hashedPassword = Users.hashPassword(req.body.password);
+  Users.findOne({'username' : req.body.username})
   .then(function(user) {
     if (user) {
       return res.status(400).send(req.body.username + ' already exists.');
@@ -159,7 +187,7 @@ app.post('/users', (req, res) => {
       .create({
         username: req.body.username,
         name: req.body.name,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
         birth_date: req.body.birth_date
       })
@@ -167,7 +195,7 @@ app.post('/users', (req, res) => {
       .catch(function(error){
         console.error(error);
         res.status(500).send('Error: ' + error);
-      })
+      });
     }
   }).catch(function(error) {
     console.error(error);
