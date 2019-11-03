@@ -33,7 +33,8 @@ const Movies = Models.Movie,
   Directors = Models.Director,
   Genres = Models.Genre;
 
-mongoose.connect('mongodb://localhost:27017/ReelCreationsDB', {useNewUrlParser: true});
+//mongoose.connect('mongodb://localhost:27017/ReelCreationsDB', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://typini:th8vile@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 const movies = [
   {"title": "Schindler's List",
