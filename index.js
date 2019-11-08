@@ -13,7 +13,7 @@ require('./passport');
 const app = express();
 app.use(cors());  //further defined below.
 
-/*
+/* //This CORS policy is for future development.
 let allowedOrigins = ['http://localhost:8080', 'http://www.tyreepini.com/'];
 
 app.use(cors({
@@ -33,59 +33,13 @@ const Movies = Models.Movie,
   Directors = Models.Director,
   Genres = Models.Genre;
 
+//MONGOOSE CONNECT
+//This line left for local development:
 //mongoose.connect('mongodb://localhost:27017/ReelCreationsDB', {useNewUrlParser: true});
-mongoose.connect('mongodb+srv://typini:th8vile@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
-const movies = [
-  {"title": "Schindler's List",
-   "year": "1993"},
-  {"title": "Wonder Woman",
-   "year": "2017"},
-  {"title": "Saving Private Ryan",
-   "year": "1998"},
-  {"title": "Amadeus",
-   "year": "1984"},
-  {"title": "Pan's Labyrinth",
-   "year": "2006"},
-  {"title": "Gandhi",
-   "year": "1982"},
-  {"title": "Empire of the Sun",
-   "year": "1987"},
-  {"title": "Love, Simon",
-   "year": "2018"},
-  {"title": "City Lights",
-   "year": "1931"},
-  {"title": "Murder on the Orient Express",
-   "year": "2017"}
-];
-
-const genres = [
-  {"name": "drama",
-   "description": "Deep character conflict often never resolved."},
-  {"name": "action",
-   "description": "Characters acting without thinking, and somehow it works after things blow up."},
-  {"name": "romantic comedy",
-   "desciption": "Silly characters woo one another until they run out of reasons to say No to each other."}
-];
-
-const directors = [
-  {"name":"Steven Spielberg",
-   "bio":"An American filmmaker consider one of the founding pioneers of the New Hollywood era.",
-   "birthYear":"1946",
-   "deathYear":"na"},
-  {"name":"Guillermo del Toro",
-   "bio":"A Mexican filmmaker, author, and actor known for his Academy Award winning films Pan's Labyrinth and The Shape of Water",
-   "birthYear":"1964",
-   "deathYear":"na"},
-  {"name":"Sir Charles Spencer Chaplin",
-   "bio":"An English comic actor, filmmaker, and composer who rose to fame in the era of silent films.",
-   "birthYear":"1889",
-   "deathYear":"1977"},
-  {"name":"Greg Berlanti",
-   "bio":"An American writer, producer, and film director",
-   "birthYear":"1972",
-   "deathYear":"na"}
-];
+//This line is for deployment on Heroku:
+//NOTE**:  password is masked - Will not hard code passwords to a GitHub repository knowingly.
+mongoose.connect('mongodb+srv://typini:*******@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -157,9 +111,8 @@ app.get('/users/:username', (req, res) => {
   });
 });
 
-/* JSON format expected:
+/* Example JSON format expected in the code below:
   {
-    ID: Integer,
     username: String,
     name: String,
     password: String,
@@ -249,7 +202,7 @@ app.delete('/users/:id', (req, res) => {
   res.send('We are working on deleting users.  In the meantime you are eternal ours. Mwahahahahahaha! RE: ' + req.params.id)
 });
 
-/*
+/*  // For local development
 app.listen(8080, () =>
   console.log('Your app is listening on port 8080.')
 );*/
