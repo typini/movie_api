@@ -50,7 +50,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-app.get('/movies', passport.authenticate('jwt', {session: false}), function(req, res){
+//I am removing this line so that anyone can make a call to "Movies" GET
+//app.get('/movies', passport.authenticate('jwt', {session: false}), function(req, res){
+app.get('/movies', function(req, res){
 //  res.json(movies)
   Movies.find()
     .then(function(movies){
