@@ -1,0 +1,30 @@
+* {
+  margin: auto;
+}
+
+label, button {
+  display: block;
+  line-height: 150%;
+  font-size: 1.2em;
+  text-align: center;
+  margin: auto;
+  margin-top: 25px;
+}
+
+button, input {
+  color: #333;
+}
+
+.toCenter {
+  display: inline-block;
+  text-align: center;
+}
+
+.login {
+  margin: auto;
+  padding: 30px;
+}
+
+.welcome {
+  text-align: center;
+}

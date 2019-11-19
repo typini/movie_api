@@ -1,0 +1,40 @@
+* {
+  font-family: Alata;
+  color:  #fffff7;
+  line-height: 1.35;
+}
+
+body {
+  background: #630101;
+}
+
+.card {
+  display: inline-grid;
+  align-items: stretch;
+  margin: 10px;
+  background: #4B0A08;
+}
+
+.card-body {
+  width: 100%;
+  background: #4B0A08;
+}
+
+.card-text {
+  font-size: 0.85em;
+}
+
+.btn {
+  background-color: rgba(255,255,200,0.3);
+}
+
+.btn-link {
+  display: flex;
+  justify-content: center;
+  color: #fffff7;
+  text-shadow: 0px 0px 7px #fffff7;
+}
+
+btn-link:hover {
+  color: #A97474;
+}
