@@ -39,7 +39,7 @@ const Movies = Models.Movie,
 
 //This line is for deployment on Heroku:
 //NOTE**:  password is masked - Will not hard code passwords to a GitHub repository knowingly.
-mongoose.connect('mongodb+srv://typini:*@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://typini:th8vile@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -50,10 +50,9 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-//I am removing this line so that anyone can make a call to "Movies" GET
-//app.get('/movies', passport.authenticate('jwt', {session: false}), function(req, res){
-app.get('/movies', function(req, res){
-//  res.json(movies)
+//I am adding this line to disallow anyone from making a call to "Movies" GET
+app.get('/movies', passport.authenticate('jwt', {session: false}), function(req, res){
+//app.get('/movies', function(req, res){
   Movies.find()
     .then(function(movies){
       res.status(201).json(movies);
