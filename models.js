@@ -36,7 +36,8 @@ let genreSchema = mongoose.Schema({
 let directorSchema = mongoose.Schema({
   name : {type: String, required: true},
   bio : String,
-  birthyear : Date
+  birthyear : Date,
+  deathyear : Date
 });
 
 let Movie = mongoose.model('Movie', movieSchema);

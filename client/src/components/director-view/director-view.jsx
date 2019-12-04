@@ -10,22 +10,21 @@ export class DirectorView extends React.Component {
 
   render(){
     const { director } = this.props;
-    if (!director) return null;
+    if (!director) return <div>This is Null</div>;
 
     return (
       <div className="director-view">
-        <img className="director-photo" src={'http://www.tyreepini.com/webImages/' + director.photoURL} />
         <div className="director-information">
           <div className="director-name">
-            <span className="label">Name: </span>
-            <span className="value">{director.Name}</span>
+            <span className="label">Name:&nbsp;</span>
+            <span className="value">{director.name}</span>
           </div>
-          <div className="director-birthdate">
-            <span className="label">Birthdate: </span>
-            <span className="value">{director.Birthdate}</span>
+          <div className="director-birthyear">
+            <span className="label">Birthdate:&nbsp;</span>
+            <span className="value">{director.birthyear}{director.deathyear ? "-" + director.deathyear : ""}</span>
           </div>
           <div className="director-bio">
-            <span className="label">Biography: </span>
+            <span className="label">Biography:&nbsp;</span>
             <span className="value">{director.bio}</span>
           </div>
         </div>

@@ -17,6 +17,8 @@ export class MainView extends React.Component {
     super();
     this.state = {
       movies: [],
+      directors: [],
+      genres: [],
       user: null,
     };
   }
@@ -63,6 +65,33 @@ export class MainView extends React.Component {
     });
   }
 
+  getDirectors(token){
+    axios.get('https://reelcreationsdb.herokuapp.com/directors', {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        directors: response.data
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
+  getGenres(token){
+    axios.get('https://reelcreationsdb.herokuapp.com/genres', {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        genres: response.data
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
   onReturn() {
     this.setState({
@@ -75,7 +104,7 @@ export class MainView extends React.Component {
 
   render() {
     //The following line is ES6 example
-    const { movies, user } = this.state;
+    const { movies, user, directors, genres } = this.state;
     //It replaces this from ES5...
     //var movies = this.state.movies;
 
@@ -94,13 +123,11 @@ export class MainView extends React.Component {
           <Route path="/register" render={() => <RegistrationView />} />
           <Route path="/users/:userId" render={() => <UserProfileView /> } />
           <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
-          <Route path="/genres/:name" render={({ match }) => {
-            if (!movies) return <div className="main-view"/>;
-            return <GenreView genre={movies.find(m=>m.Genres.Name === match.params.name).Genre}/>}
+          <Route path="/genres/:nameId" render={({ match }) => {
+            <GenreView genre={genres.find(g=>g._id === match.params.nameId)}/>}
           } />
-          <Route path="/directors/:name" render={({ match }) => {
-            if (!movies) return <div className="main-view"/>;
-            return <DirectorView director={movies.find(m=>m.Director.Name === match.params.name).Director}/>}
+          <Route path="/directors/:nameId" render={({ match }) => {
+            <DirectorView director={directors.find(d=>d._id === match.params.nameId)}/>}
           } />
         </div>
       </Router>
