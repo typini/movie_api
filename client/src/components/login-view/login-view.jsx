@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './login-view.scss';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import axios from 'axios';
 
@@ -10,8 +12,8 @@ export function LoginView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('https://reelcreationsdb.herokuapp.com/login', {
-      Username: username,
-      Password: password
+      username: username,
+      password: password
     })
     .then(response => {
       const data = response.data;
@@ -29,18 +31,22 @@ export function LoginView(props) {
   return (
    <div className="login">
     <h1 className="welcome">Welcome to ReelCreationsDB</h1>
-    <form>
-      <label>
-        Username:&nbsp;
-        <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-      </label>
-      <label>
-        Password:&nbsp;
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-      </label>
-      <button type="button" onClick={handleSubmit}>Submit</button>
-      <button type="button" onClick={handleRequest}>Register A New User</button>
-    </form>
+    <Form>
+      <Form.Group controlId="formBasicUsername">
+        <Form.Label>
+          Username:&nbsp;
+        </Form.Label>
+        <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>
+          Password:&nbsp;
+        </Form.Label>
+        <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+      </Form.Group>
+      <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
+      <Button variant="primary" type="button" onClick={handleRequest}>Register A New User</Button>
+    </Form>
    </div>
   );
 

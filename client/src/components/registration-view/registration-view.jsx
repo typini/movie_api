@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './registration-view.scss';
 
+import axios from 'axios';
+
 export function RegistrationView(props) {
   const [username, setUsername ] = useState('');
   const [password, setPassword ] = useState('');
@@ -8,10 +10,20 @@ export function RegistrationView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-    props.onRegistration(username);
-    /* Send a request to the server to register a new user */
-    /* then have the user log-in with their new credentials  */
+    axios.post('https://reelcreationsdb.herokuapp.com/users', {
+      username: username,
+      password: password,
+      email: email,
+      birth_date: birth_date
+    })
+    .then(response => {
+      const data = response.data;
+      console.log(data);
+      window.open('/', '_self');
+    })
+    .catch(e => {
+      console.log('error registering the user')
+    });
   };
 
   const handleCancel = (e) => {

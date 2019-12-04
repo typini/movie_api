@@ -9,13 +9,12 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie, onClick } = this.props;
+    const { movie } = this.props;
 
     if (!movie) return null;
 
     return (
       <div className="movie-view">
-        <button onClick={() => onClick(null)}>back</button><br />
         <img className="movie-poster" src={'http://www.tyreepini.com/webImages/' + movie.imageURL} />
         <div className="movie-information">
           <div className="movie-title">

@@ -62,25 +62,39 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), function(req,
     });
 });
 
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.json(movies.find( (movie) =>
   { return movie.title === req.params.title }));
 });
 
-app.get('/genres', (req, res) => {
-  res.json(genres)
+app.get('/genres', passport.authenticate('jwt', {session: false}), (req, res) => {
+  //res.json(genres)
+  Genres.find()
+    .then(function(genres){
+      res.status(201).json(genres);
+    }).catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
-app.get('/genres/:name', (req, res) => {
+app.get('/genres/:name', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.json(genres.find( (genre) =>
   { return genre.name === req.params.name }));
 });
 
-app.get('/directors', (req, res) => {
-  res.json(directors)
+app.get('/directors', passport.authenticate('jwt', {session: false}), (req, res) => {
+  //res.json(directors)
+  Directors.find()
+    .then(function(directors){
+      res.status(201).json(genres);
+    }).catch(function(error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
 });
 
-app.get('/directors/:name', (req, res) => {
+app.get('/directors/:name', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.json(directors.find( (director) =>
   { return director.name === req.params.name }));
 });
@@ -90,7 +104,7 @@ app.get('/', function(req, res){
 });
 
 
-app.get('/users', (req, res) => {
+app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.find()
   .then(function(users) {
     res.status(201).json(users)
@@ -101,7 +115,7 @@ app.get('/users', (req, res) => {
   });
 });
 
-app.get('/users/:username', (req, res) => {
+app.get('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOne({username : req.params.username })
   .then(function(user){
     res.json(user);
@@ -158,7 +172,7 @@ app.post('/users',
   });
 });
 
-app.post('/movies', (req, res) => {
+app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
     //res.send('We are working on posting movies to the list.  This feature will be available soon.');
     Movies.findOne({ 'title': req.body.title })
     .then(function (movie) {
@@ -187,20 +201,88 @@ app.post('/movies', (req, res) => {
     });
 });
 
-app.put('/users', (req, res) => {
-  res.send('We are working on updating user info.  It will be available soon.')
+app.put('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+  //res.send('We are working on updating user info.  It will be available soon.')
+  Users.findOne({ 'username': req.body.username })
+  .then(function (user) {
+    if (user) {
+      let hashedPassword = "";
+      //I would like a validator here requesting the original password be entered corrently
+      //But I am unsure how to do that at the present time.
+      if (req.body.newPassword === req.body.newSPassword){
+        hashedPassword = Users.hashPassword(req.body.newPassword);
+      } else {
+        return res.status(400).send(req.body.user + ' cannot be modified without the correct password.');
+      }
+
+      let updateUserObject = {
+          name: req.body.name,
+          email: req.body.email,
+          birth_date: req.body.birth_date
+      }
+
+      if (hashedPassword != ""){
+          updateUserObject.password = hashedPassword;
+      }
+
+      Users
+        .updateOne(
+          updateUserObject
+        )
+        .then(function (user) { res.status(201).json(user) })
+        .catch(function (error) {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+    } else {
+      return res.status(400).send(req.body.title + ' is not accessible.');
+    }
+  }).catch(function (error) {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
-app.post('/users/:id/:title', (req, res) => {
-  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
+  //res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+  Users.findOne({ 'username': req.body.username })
+  .then(function (user) {
+    Users.updateOne({
+      favorites: ["You Updated Your Favorite Movies"]
+    });
+  }
+  .catch(function (error) {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
-app.delete('/users/:id/:title', (req, res) => {
-  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+app.delete('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
+  //res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+  Users.findOne({ 'username': req.body.username })
+  .then(function (user) {
+    Users.updateOne({
+      favorites: ["You Deleted Your Favorite Movies"]
+    });
+  }
+  .catch(function (error) {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
-app.delete('/users/:id', (req, res) => {
-  res.send('We are working on deleting users.  In the meantime you are eternal ours. Mwahahahahahaha! RE: ' + req.params.id)
+app.delete('/users/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.id)
+  Users.findOne({ 'username': req.body.username })
+  .then(function (user) {
+    Users.deleteOne({
+      username: req.body.username
+    });
+  }
+  .catch(function (error) {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
 });
 
 /*  // For local development
