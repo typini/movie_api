@@ -72,7 +72,7 @@ app.get('/genres', passport.authenticate('jwt', {session: false}), (req, res) =>
   Genres.find()
     .then(function(genres){
       res.status(201).json(genres);
-    }).catch(function(error) {
+    }).catch(function(error){
       console.error(error);
       res.status(500).send("Error: " + error);
     });
@@ -146,30 +146,30 @@ app.post('/users',
     if (!errors.isEmpty()){
       return res.status(422).json({errors: errors.array() });
     }
-  let hashedPassword = Users.hashPassword(req.body.password);
-  Users.findOne({'username' : req.body.username})
-  .then(function(user) {
-    if (user) {
+    let hashedPassword = Users.hashPassword(req.body.password);
+    Users.findOne({'username' : req.body.username})
+    .then(function(user) {
+      if (user) {
       return res.status(400).send(req.body.username + ' already exists.');
-    } else {
-      Users
-      .create({
-        username: req.body.username,
-        name: req.body.name,
-        password: hashedPassword,
-        email: req.body.email,
-        birth_date: req.body.birth_date
-      })
-      .then(function(user) {res.status(201).json(user) })
-      .catch(function(error){
-        console.error(error);
-        res.status(500).send('Error: ' + error);
-      });
-    }
-  }).catch(function(error) {
-    console.error(error);
-    res.status(500).send('Error: ' + error);
-  });
+      } else {
+        Users
+        .create({
+          username: req.body.username,
+          name: req.body.name,
+          password: hashedPassword,
+          email: req.body.email,
+          birth_date: req.body.birth_date
+        })
+        .then(function(user) {res.status(201).json(user) })
+        .catch(function(error){
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        });
+      }
+    }).catch(function(error) {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 
 app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -193,7 +193,7 @@ app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) =
                 .catch(function (error) {
                     console.error(error);
                     res.status(500).send('Error: ' + error);
-                })
+                });
         }
     }).catch(function (error) {
         console.error(error);
@@ -245,8 +245,8 @@ app.put('/users', passport.authenticate('jwt', {session: false}), (req, res) => 
 });
 
 app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
-  //res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
-  Users.findOne({ 'username': req.body.username })
+  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+/*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     Users.updateOne({
       favorites: ["You Updated Your Favorite Movies"]
@@ -256,6 +256,7 @@ app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (r
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
+*/
 });
 
 app.delete('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
