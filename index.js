@@ -78,25 +78,25 @@ app.get('/genres', (req, res) => {
     });
 });
 
-app.get('/genres/:name', (req, res) => {
+app.get('/genres/:nameId', (req, res) => {
   res.json(genres.find( (genre) =>
-  { return genre.name === req.params.name }));
+  { return genre._id === req.params.nameId }));
 });
 
 app.get('/directors', (req, res) => {
   //res.json(directors)
   Directors.find()
     .then(function(directors){
-      res.status(201).json(genres);
+      res.status(201).json(directors);
     }).catch(function(error) {
       console.error(error);
       res.status(500).send("Error: " + error);
     });
 });
 
-app.get('/directors/:name', (req, res) => {
+app.get('/directors/:nameId', (req, res) => {
   res.json(directors.find( (director) =>
-  { return director.name === req.params.name }));
+  { return director._id === req.params.nameId }));
 });
 
 app.get('/', function(req, res){
