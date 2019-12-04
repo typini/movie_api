@@ -1,11 +1,23 @@
 const mongoose = require('mongoose');
 const bcryptjs = require('bcryptjs');
 
-let movieSchema = mongoose.Schema({
+//This is the movieScheme when directors and genres were not Codes, but subreferences
+/*let movieSchema = mongoose.Schema({
   title : {type: String, required: true},
   description: {type: String, required: true},
   genre : {type: mongoose.Schema.Types.ObjectId, ref: 'Genres' },
   director : {type: mongoose.Schema.Types.ObjectId, ref: 'Directors' },
+  actors : [String],
+  image_path : String,
+  featured : Boolean
+});*/
+
+//Use this instead (this might change back to the original when you include calls to subreferences
+let movieSchema = mongoose.Schema({
+  title : {type: String, required: true},
+  description: {type: String, required: true},
+  genre : {type: String },
+  director : {type: String },
   actors : [String],
   image_path : String,
   featured : Boolean
