@@ -78,9 +78,9 @@ app.get('/genres', (req, res) => {
     });
 });
 
-app.get('/genres/:name', (req, res) => {
+app.get('/genres/:id', (req, res) => {
   res.json(genres.find( (genre) =>
-  { return genre.name === req.params.name }));
+  { return genre._id === req.params.id }));
 });
 
 
