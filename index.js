@@ -202,8 +202,8 @@ app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) =
 });
 
 app.put('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
-  //res.send('We are working on updating user info.  It will be available soon.')
-  Users.findOne({ 'username': req.body.username })
+  res.send('We are working on updating user info.  It will be available soon.')
+/*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     if (user) {
       let hashedPassword = "";
@@ -241,6 +241,7 @@ app.put('/users', passport.authenticate('jwt', {session: false}), (req, res) => 
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
+*/
 });
 
 app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -258,8 +259,8 @@ app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (r
 });
 
 app.delete('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
-  //res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
-  Users.findOne({ 'username': req.body.username })
+res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+/*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     Users.updateOne({
       favorites: ["You Deleted Your Favorite Movies"]
@@ -269,11 +270,12 @@ app.delete('/users/:id/:title', passport.authenticate('jwt', {session: false}), 
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
+*/
 });
 
 app.delete('/users/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.id)
-  Users.findOne({ 'username': req.body.username })
+/*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     Users.deleteOne({
       username: req.body.username
@@ -283,6 +285,7 @@ app.delete('/users/:id', passport.authenticate('jwt', {session: false}), (req, r
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
+*/
 });
 
 /*  // For local development
