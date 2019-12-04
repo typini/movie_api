@@ -62,7 +62,7 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), function(req,
     });
 });
 
-app.get('/movies/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movies/:title', (req, res) => {
   res.json(movies.find( (movie) =>
   { return movie.title === req.params.title }));
 });
@@ -104,7 +104,7 @@ app.get('/', function(req, res){
 });
 
 
-app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users', (req, res) => {
   Users.find()
   .then(function(users) {
     res.status(201).json(users)
@@ -115,7 +115,7 @@ app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => 
   });
 });
 
-app.get('/users/:username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users/:username', (req, res) => {
   Users.findOne({username : req.params.username })
   .then(function(user){
     res.json(user);
@@ -172,7 +172,7 @@ app.post('/users',
     });
 });
 
-app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/movies', (req, res) => {
     //res.send('We are working on posting movies to the list.  This feature will be available soon.');
     Movies.findOne({ 'title': req.body.title })
     .then(function (movie) {
@@ -201,7 +201,7 @@ app.post('/movies', passport.authenticate('jwt', {session: false}), (req, res) =
     });
 });
 
-app.put('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put('/users', (req, res) => {
   res.send('We are working on updating user info.  It will be available soon.')
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
@@ -244,7 +244,7 @@ app.put('/users', passport.authenticate('jwt', {session: false}), (req, res) => 
 */
 });
 
-app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/users/:id/:title', (req, res) => {
   res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
@@ -259,7 +259,7 @@ app.post('/users/:id/:title', passport.authenticate('jwt', {session: false}), (r
 */
 });
 
-app.delete('/users/:id/:title', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.delete('/users/:id/:title', (req, res) => {
 res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
@@ -274,7 +274,7 @@ res.send('We are working on favorites lists.  It will be available soon. RE: ' +
 */
 });
 
-app.delete('/users/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.delete('/users/:id', (req, res) => {
   res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.id)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
