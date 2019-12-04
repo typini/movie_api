@@ -78,10 +78,11 @@ app.get('/genres', (req, res) => {
     });
 });
 
-app.get('/genres/:nameId', (req, res) => {
+app.get('/genres/:name', (req, res) => {
   res.json(genres.find( (genre) =>
-  { return genre._id === req.params.nameId }));
+  { return genre.name === req.params.name }));
 });
+
 
 app.get('/directors', (req, res) => {
   //res.json(directors)
@@ -94,9 +95,9 @@ app.get('/directors', (req, res) => {
     });
 });
 
-app.get('/directors/:nameId', (req, res) => {
+app.get('/directors/:name', (req, res) => {
   res.json(directors.find( (director) =>
-  { return director._id === req.params.nameId }));
+  { return director.name === req.params.name }));
 });
 
 app.get('/', function(req, res){
