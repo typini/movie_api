@@ -162,7 +162,7 @@ app.post('/users',
           username: req.body.username,
           name: req.body.name,
           email: req.body.email,
-          birth_date: req.body.birthdate,
+          birth_date: new Date(req.body.birthdate),
           password: hashedPassword,
         })
         .then(function(user) {res.status(201).json(user) })
