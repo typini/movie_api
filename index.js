@@ -210,7 +210,7 @@ app.put('/users/:id', (req, res) => {
       let hashedPassword = "";
       //I would like a validator here requesting the original password be entered corrently
       //But I am unsure how to do that at the present time.
-      if (req.body.newPassword === req.body.newSPassword){
+      if (req.body.newPassword === req.body.newSPassword && req.body.newPassword != ""){
         hashedPassword = Users.hashPassword(req.body.newPassword);
       } else {
         return res.status(400).send('New passwords do not match.');
@@ -220,7 +220,7 @@ app.put('/users/:id', (req, res) => {
 
       if (req.body.name != "") updateUserObject.name = req.body.name;
       if (req.body.email != "") updateUserObject.email = req.body.email;
-      if (req.body.birthdate!= "") updateUserObject.birth_date = req.body.birthdate;
+      if (req.body.birthdate!= "") updateUserObject.birth_date = new Date(req.body.birthdate);
       if (hashedPassword != "") updateUserObject.password = hashedPassword;
 
       Users

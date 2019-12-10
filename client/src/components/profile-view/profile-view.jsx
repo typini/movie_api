@@ -33,7 +33,7 @@ export function ProfileView(props) {
       setUserId(res.data._id);
       setName(res.data.name || '');
       setEmail(res.data.email || '');
-      setBirthdate(res.data.birthdate || '');
+      setBirthdate(res.data.birth_date || '');
     })
     .catch (err => {
       console.error("Error: " + err);
@@ -49,9 +49,12 @@ export function ProfileView(props) {
         Authorization: `Bearer ${token}`
       },
       body: {
+        username: username,
         name: name,
         email: email,
-        birthdate: birthdate
+        birth_date: birthdate,
+        newPassword: nPassword,
+        newSPassword: nSPassword
       }
     })
     .then(res => {
@@ -71,7 +74,7 @@ export function ProfileView(props) {
       {/*<form className="update-profile" onSubmit={this.handleSubmit>*/}
       <Form className="update-profile">
 
-        <Form.Group controlId="formBasicUsername" className="user-field">
+        <Form.Group controlId="formBasicUsernameDisabled" className="user-field">
           <Form.Label>Username:&nbsp;</Form.Label>
           <Form.Control placeholder="Enter username" value={username} type="text" readOnly />
         </Form.Group>
