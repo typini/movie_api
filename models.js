@@ -28,7 +28,7 @@ let userSchema = mongoose.Schema({
   name : {type: String, required: true},
   password : {type: String, required: true},
   email : {type: String, required: true},
-  birth_date : Date,
+  birth_date : String,
   favorites : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }]
 });
 
@@ -48,8 +48,8 @@ let genreSchema = mongoose.Schema({
 let directorSchema = mongoose.Schema({
   name : {type: String, required: true},
   bio : String,
-  birthyear : Date,
-  deathyear : Date
+  birthyear : String,
+  deathyear : String
 });
 
 let Movie = mongoose.model('Movie', movieSchema);

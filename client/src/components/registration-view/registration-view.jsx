@@ -18,7 +18,7 @@ export function RegistrationView(props) {
     e.preventDefault();
     axios.post('https://reelcreationsdb.herokuapp.com/users', {
       username: username,
-      password: password,
+      name: name,
       email: email,
       birth_date: birthdate,
       password: password,

@@ -133,7 +133,7 @@ app.get('/users/:username', (req, res) => {
     name: String,
     password: String,
     email: String,
-    birth_date: Date
+    birth_date: String // <-- Note that javascript dates are strings
   }
 */
 app.post('/users',
@@ -162,7 +162,7 @@ app.post('/users',
           username: req.body.username,
           name: req.body.name,
           email: req.body.email,
-          birth_date: new Date(req.body.birthdate),
+          birth_date: req.body.birthdate,
           password: hashedPassword,
         })
         .then(function(user) {res.status(201).json(user) })
@@ -224,7 +224,7 @@ app.put('/users/:id', (req, res) => {
 
       if (req.body.name != "") updateUserObject.name = req.body.name;
       if (req.body.email != "") updateUserObject.email = req.body.email;
-      if (req.body.birthdate!= "") updateUserObject.birth_date = new Date(req.body.birthdate);
+      if (req.body.birthdate != "") updateUserObject.birth_date = req.body.birthdate;
       if (hashedPassword != "") updateUserObject.password = hashedPassword;
 
       Users
