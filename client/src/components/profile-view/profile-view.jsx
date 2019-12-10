@@ -44,17 +44,19 @@ export function ProfileView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put('https://reelcreationsdb.herokuapp.com/users/'+username, {
-      headers: { Authorization: `Bearer ${token}`},
+    axios.put('https://reelcreationsdb.herokuapp.com/users/'+userId, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       body: {
-        name: setName,
-        email: setEmail,
-        birthdate: setBirthdate,
-        password: setNPassword,
+        name: name,
+        email: email,
+        birthdate: birthdate
       }
     })
     .then(res => {
       const data = res.data;
+      console.log(data);
     })
     .catch(err => {
       console.error('Error: ' + err);

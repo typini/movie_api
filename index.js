@@ -203,8 +203,8 @@ app.post('/movies', (req, res) => {
 });
 
 app.put('/users/:id', (req, res) => {
-  res.send('We are working on updating user info.  It will be available soon.')
-/*  Users.findOne({ 'username': req.body.username })
+//  res.send('We are working on updating user info.  It will be available soon.')
+  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     if (user) {
       let hashedPassword = "";
@@ -213,18 +213,15 @@ app.put('/users/:id', (req, res) => {
       if (req.body.newPassword === req.body.newSPassword){
         hashedPassword = Users.hashPassword(req.body.newPassword);
       } else {
-        return res.status(400).send(req.body.user + ' cannot be modified without the correct password.');
+        return res.status(400).send('New passwords do not match.');
       }
 
-      let updateUserObject = {
-          name: req.body.name,
-          email: req.body.email,
-          birth_date: req.body.birth_date
-      }
+      let updateUserObject = {};
 
-      if (hashedPassword != ""){
-          updateUserObject.password = hashedPassword;
-      }
+      if (req.body.name != "") updateUserObject.name = req.body.name;
+      if (req.body.email != "") updateUserObject.email = req.body.email;
+      if (req.body.birthdate!= "") updateUserObject.birth_date = req.body.birthdate;
+      if (hashedPassword != "") updateUserObject.password = hashedPassword;
 
       Users
         .updateOne(
@@ -242,7 +239,6 @@ app.put('/users/:id', (req, res) => {
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
-*/
 });
 
 app.post('/users/:id/:title', (req, res) => {
