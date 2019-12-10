@@ -142,13 +142,13 @@ app.post('/users',
   [check('username', 'Username of 3 or more characters is required').isLength({min: 3}),
   check('username', 'Username contains non alphanumeric character - not allowed.').isAlphanumeric(),
   check('password', 'password is required').not().isEmpty(),
-  check('rpassword', 'repeated password is required').not().isEmpty(),
+  check('rPassword', 'repeated password is required').not().isEmpty(),
   check('email', 'Email does not appear to be valid').isEmail()], (req, res) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()){
       return res.status(422).json({errors: errors.array() });
     }
-    if (password != rpassword){
+    if (password != rPassword){
       return res.status(422).json({errors: "Passwords do not match"});
     }
     let hashedPassword = Users.hashPassword(req.body.password);
