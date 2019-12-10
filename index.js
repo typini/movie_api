@@ -39,7 +39,7 @@ const Movies = Models.Movie,
 
 //This line is for deployment on Heroku:
 //NOTE**:  password is masked - Will not hard code passwords to a GitHub repository knowingly.
-mongoose.connect('mongodb+srv://typini:33people33@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://typini:th8vile@tyreepini-tuvz3.mongodb.net/ReelCreationsDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 app.use(morgan('common'));
 app.use(express.static('public'));
