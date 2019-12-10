@@ -202,7 +202,7 @@ app.post('/movies', (req, res) => {
     });
 });
 
-app.put('/users', (req, res) => {
+app.put('/users/:id', (req, res) => {
   res.send('We are working on updating user info.  It will be available soon.')
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {

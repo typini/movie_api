@@ -1,5 +1,7 @@
 import React from 'react';
 import './movie-view.scss';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 
@@ -15,6 +17,9 @@ export class MovieView extends React.Component {
 
     return (
       <div className="movie-view">
+        <Link to={`/`}>
+          <Button variant="link">Back</Button>
+        </Link>
         <img className="movie-poster" src={'http://www.tyreepini.com/webImages/' + movie.imageURL} />
         <div className="movie-information">
           <div className="movie-title">

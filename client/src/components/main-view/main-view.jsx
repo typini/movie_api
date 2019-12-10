@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -30,18 +32,22 @@ export class MainView extends React.Component {
         user: localStorage.getItem('user')
       });
       this.getMovies(accessToken);
+      this.getDirectors(accessToken);
+      this.getGenres(accessToken);
     }
   }
 
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
-      user: authData.user.username
+      user: authData.user.username,
     });
     
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.username);
     this.getMovies(authData.token);
+    this.getDirectors(authData.token);
+    this.getGenres(authData.token);
   }
 
   onRegistration(user) {
@@ -59,6 +65,7 @@ export class MainView extends React.Component {
       this.setState({
         movies: response.data
       });
+      console.log("These are you movies\n" + response.data);
     })
     .catch(error => {
       console.log(error);
@@ -73,6 +80,7 @@ export class MainView extends React.Component {
       this.setState({
         directors: response.data
       });
+      console.log(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -87,6 +95,7 @@ export class MainView extends React.Component {
       this.setState({
         genres: response.data
       });
+      console.log(response.data);
     })
     .catch(error => {
       console.log(error);
@@ -113,21 +122,41 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div className="main-view">
-          <span>{localStorage.getItem('user')}</span>
-          <button className="log-out" type="button" onClick={() => this.onReturn()}>Log Out</button>
+          {user &&
+            <Link to={`/users/${localStorage.getItem('user')}`}>
+              <Button variant="link">{localStorage.getItem('user')}</Button>
+            </Link>
+          }
+          {user &&
+            <Link to={`/`}>
+              <Button variant="link" type="button" onClick={() => this.onReturn()}>Log Out</Button>
+            </Link>
+          }
           <Route exact path="/" render={() => {
             if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             return movies.map(m => <MovieCard key={m._id} movie={m}/>)
             }
           }/>
-          <Route path="/register" render={() => <RegistrationView />} />
-          <Route path="/users/:userId" render={() => <UserProfileView /> } />
-          <Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
-          <Route path="/genres/:nameId" render={({ match }) => {
-            <GenreView genre={genres.find(g=>g._id === match.params.nameId)}/>}
+          <Route path="/register" render={() =>
+            <RegistrationView />
           } />
-          <Route path="/directors/:nameId" render={({ match }) => {
-            <DirectorView director={directors.find(d=>d._id === match.params.nameId)}/>}
+          <Route path="/users/:userId" render={() => 
+            < ProfileView />
+          } />
+          <Route path="/movies/:movieId" render={({match}) =>
+            <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>
+          } />
+          <Route path="/genres/:genreId" render={({match}) => 
+            <GenreView
+              genre={genres.find(g => g._id === match.params.genreId)}
+              movies={movies.filter(function(m) { return m.Genre === match.params.genreId})}
+            />
+          } />
+          <Route path="/directors/:directorId" render={({ match }) => 
+            <DirectorView
+              director={directors.find(d => d._id === match.params.directorId)}
+              movies={movies.filter(function(m) { return m.Director === match.params.directorId})}
+            />
           } />
         </div>
       </Router>
