@@ -3,6 +3,8 @@ import './login-view.scss';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 
 export function LoginView(props) {
@@ -24,10 +26,6 @@ export function LoginView(props) {
     });
   };
 
-  const handleRequest = (e) => {
-    props.registerNewUser();
-  };
-
   return (
    <div className="login">
     <h1 className="welcome">Welcome to ReelCreationsDB</h1>
@@ -38,14 +36,16 @@ export function LoginView(props) {
         </Form.Label>
         <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
       </Form.Group>
-      <Form.Group>
+      <Form.Group controlId="formBasicPassword">
         <Form.Label>
           Password:&nbsp;
         </Form.Label>
         <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
-      <Button variant="primary" type="button" onClick={handleRequest}>Register A New User</Button>
+      <Button variant="link" type="submit" onClick={handleSubmit}>Submit</Button>
+      <Link to={`/register`}>
+        <Button variant="link">Register A New User</Button>
+      </Link>
     </Form>
    </div>
   );

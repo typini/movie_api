@@ -142,10 +142,14 @@ app.post('/users',
   [check('username', 'Username of 3 or more characters is required').isLength({min: 3}),
   check('username', 'Username contains non alphanumeric character - not allowed.').isAlphanumeric(),
   check('password', 'password is required').not().isEmpty(),
+  check('rpassword', 'repeated password is required').not().isEmpty(),
   check('email', 'Email does not appear to be valid').isEmail()], (req, res) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()){
       return res.status(422).json({errors: errors.array() });
+    }
+    if (password != rpassword){
+      return res.status(422).json({errors: "Passwords do not match"});
     }
     let hashedPassword = Users.hashPassword(req.body.password);
     Users.findOne({'username' : req.body.username})
@@ -157,19 +161,19 @@ app.post('/users',
         .create({
           username: req.body.username,
           name: req.body.name,
-          password: hashedPassword,
           email: req.body.email,
-          birth_date: req.body.birth_date
+          birth_date: req.body.birthdate,
+          password: hashedPassword,
         })
         .then(function(user) {res.status(201).json(user) })
         .catch(function(error){
           console.error(error);
-          res.status(500).send('Error: ' + error);
+          res.status(500).send('Error Type 1: ' + error);
         });
       }
     }).catch(function(error) {
       console.error(error);
-      res.status(500).send('Error: ' + error);
+      res.status(500).send('Error Type 2: ' + error);
     });
 });
 

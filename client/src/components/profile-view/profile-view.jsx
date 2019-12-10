@@ -45,17 +45,12 @@ export function ProfileView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.put('https://reelcreationsdb.herokuapp.com/users/'+userId, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      body: {
-        username: username,
-        name: name,
-        email: email,
-        birth_date: birthdate,
-        newPassword: nPassword,
-        newSPassword: nSPassword
-      }
+      username: username,
+      name: name,
+      email: email,
+      birth_date: birthdate,
+      newPassword: nPassword,
+      newSPassword: nSPassword
     })
     .then(res => {
       const data = res.data;
