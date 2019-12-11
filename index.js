@@ -209,7 +209,7 @@ app.post('/movies', (req, res) => {
 
 app.patch('/users/:username', (req, res) => {
 //  res.send('We are working on updating user info.  It will be available soon.')
-  Users.findOne({ 'username': req.body.username })
+  Users.findOne({ username: req.params.username })
   .then(function (user) {
     if (user) {
       let hashedPassword = "";

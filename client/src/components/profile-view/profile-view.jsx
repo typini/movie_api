@@ -52,6 +52,7 @@ export function ProfileView(props) {
     })
     .then(res => {
       const data = res.data;
+      console.log("You just modified " + username + ".  See details below.");
       console.log(data);
     })
     .catch(err => {
