@@ -208,11 +208,9 @@ app.post('/movies', (req, res) => {
 });
 
 app.patch('/users/:username', (req, res) => {
-//  res.send('We are working on updating user info.  It will be available soon.')
-//YOU NEED HELP HERE!
   Users.findOne({username : req.params.username })
   .then(function(user){
-    if (user)
+    if (user) {
       let hashedPassword = "";
       //I would like a validator here requesting the original password be entered corrently
       //But I am unsure how to do that at the present time.
@@ -232,15 +230,12 @@ app.patch('/users/:username', (req, res) => {
       if (req.body.birth_date != "") updateUserObject.birth_date = req.body.birth_date;
       if (hashedPassword != "") updateUserObject.password = hashedPassword;
 
-      user
-        .update(
-          updateUserObject
-        )
-        .then(function (user) { res.status(201).json(user) })
-        .catch(function (error) {
-          console.error(error);
-          res.status(500).send('Error: ' + error);
-        })
+      user.update(updateUserObject)
+        .then(function (u) { res.status(201).json(u) })
+        .catch(function (err) {
+          console.error(err);
+          res.status(500).send('Error: ' + err);
+        });
     } else {
       return res.status(400).send(req.body.username + ' is not accessible.');
     }
