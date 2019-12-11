@@ -280,9 +280,8 @@ app.delete('/users/:username', (req, res) => {
 //  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.username)
   Users.findOne({username : req.body.username })
   .then(function(user){
-    let userObject = json(user);
-    res(userObject);
-    Users.deleteOne(userObject);
+    res.json(user);
+    user.deleteOne({username: username});
   })
   .catch(function(err) {
     console.error(err);
