@@ -44,7 +44,7 @@ export function ProfileView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put('https://reelcreationsdb.herokuapp.com/users/'+userId, {
+    axios.patch('https://reelcreationsdb.herokuapp.com/users/'+userId, {
       username: username,
       name: name,
       email: email,
