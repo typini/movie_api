@@ -207,7 +207,7 @@ app.post('/movies', (req, res) => {
     });
 });
 
-app.patch('/users/:id', (req, res) => {
+app.patch('/users/:username', (req, res) => {
 //  res.send('We are working on updating user info.  It will be available soon.')
   Users.findOne({ 'username': req.body.username })
   .then(function (user) {
@@ -238,7 +238,7 @@ app.patch('/users/:id', (req, res) => {
           res.status(500).send('Error: ' + error);
         })
     } else {
-      return res.status(400).send(req.body.title + ' is not accessible.');
+      return res.status(400).send(req.body.username + ' is not accessible.');
     }
   }).catch(function (error) {
     console.error(error);
@@ -246,8 +246,8 @@ app.patch('/users/:id', (req, res) => {
   });
 });
 
-app.post('/users/:id/:title', (req, res) => {
-  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+app.post('/users/:username/:title', (req, res) => {
+  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.title)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     Users.updateOne({
@@ -261,8 +261,8 @@ app.post('/users/:id/:title', (req, res) => {
 */
 });
 
-app.delete('/users/:id/:title', (req, res) => {
-res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.id + ' and ' + req.params.title)
+app.delete('/users/:username/:title', (req, res) => {
+res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.title)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     Users.updateOne({
@@ -276,8 +276,8 @@ res.send('We are working on favorites lists.  It will be available soon. RE: ' +
 */
 });
 
-app.delete('/users/:id', (req, res) => {
-  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.id)
+app.delete('/users/:username', (req, res) => {
+  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.username)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
     Users.deleteOne({

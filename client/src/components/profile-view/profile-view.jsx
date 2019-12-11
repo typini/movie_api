@@ -17,7 +17,6 @@ export function ProfileView(props) {
 
   const username = localStorage.getItem('user');
   const token = localStorage.getItem('token');
-  const [ userId, setUserId ] = useState('');
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ birthdate, setBirthdate ] = useState('');
@@ -30,7 +29,6 @@ export function ProfileView(props) {
     })
     .then(res => {
       console.log(res);
-      setUserId(res.data._id);
       setName(res.data.name || '');
       setEmail(res.data.email || '');
       setBirthdate(res.data.birth_date || '');
@@ -44,7 +42,7 @@ export function ProfileView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.patch('https://reelcreationsdb.herokuapp.com/users/'+userId, {
+    axios.patch('https://reelcreationsdb.herokuapp.com/users/'+username, {
       username: username,
       name: name,
       email: email,
