@@ -283,7 +283,7 @@ app.delete('/users/:username', (req, res) => {
     user.delete({
       username: req.body.username
     });
-  }
+  })
   .catch(function (error) {
     console.error(error);
     res.status(500).send('Error: ' + error);
