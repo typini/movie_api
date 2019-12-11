@@ -282,7 +282,6 @@ app.delete('/users/:username', (req, res) => {
     username: req.body.username
   }), function (err) {
     console.error(err);
-    res.status(500).send('Error: ' + err);
   });
 });
 
