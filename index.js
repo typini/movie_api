@@ -151,8 +151,9 @@ app.post('/users',
     if (password != rPassword){
       return res.status(422).json({errors: "Passwords do not match"});
     }
+
     let hashedPassword = Users.hashPassword(req.body.password);
-    Users.findOne({'username' : req.body.username})
+    Users.findOne({ username : req.body.username})
     .then(function(user) {
       if (user) {
       return res.status(400).send(req.body.username + ' already exists.');
