@@ -148,7 +148,7 @@ app.post('/users',
     if (!errors.isEmpty()){
       return res.status(422).json({errors: errors.array() });
     }
-    if (password != rPassword){
+    if (req.body.password != req.body.rPassword){
       return res.status(422).json({errors: "Passwords do not match"});
     }
 
