@@ -224,7 +224,7 @@ app.put('/users/:id', (req, res) => {
 
       if (req.body.name != "") updateUserObject.name = req.body.name;
       if (req.body.email != "") updateUserObject.email = req.body.email;
-      if (req.body.birthdate != "") updateUserObject.birth_date = req.body.birthdate;
+      if (req.body.birth_date != "") updateUserObject.birth_date = req.body.birth_date;
       if (hashedPassword != "") updateUserObject.password = hashedPassword;
 
       Users
