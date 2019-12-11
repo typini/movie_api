@@ -63,7 +63,7 @@ export function ProfileView(props) {
   const handleDelete = (e) => {
     e.preventDefault();
     axios.delete('https://reelcreationsdb.herokuapp.com/users/'+username, {
-      username: username
+      data: {username: username}
     })
     .then(res => {
       const data = res.data;
