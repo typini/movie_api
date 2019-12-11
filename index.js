@@ -209,16 +209,21 @@ app.post('/movies', (req, res) => {
 
 app.patch('/users/:username', (req, res) => {
 //  res.send('We are working on updating user info.  It will be available soon.')
-  Users.updateOne({ username: req.params.username })
-  .then(function (user) {
+//YOU NEED HELP HERE!
+  Users.find( (user) =>
+  { return user.username === req.params.title })
+  .then(function(user) {
     if (user) {
       let hashedPassword = "";
       //I would like a validator here requesting the original password be entered corrently
       //But I am unsure how to do that at the present time.
-      if (req.body.newPassword === req.body.newSPassword && req.body.newPassword != ""){
-        hashedPassword = Users.hashPassword(req.body.newPassword);
-      } else {
-        return res.status(400).send('New passwords do not match.');
+
+      if (req.body.newPassword != ""){
+        if (req.body.newPassword === req.body.newSPassword){
+          hashedPassword = Users.hashPassword(req.body.newPassword);
+        } else {
+          return res.status(400).send('New passwords do not match.');
+        }
       }
 
       let updateUserObject = {};
