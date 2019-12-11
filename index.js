@@ -278,10 +278,13 @@ res.send('We are working on favorites lists.  It will be available soon. RE: ' +
 
 app.delete('/users/:username', (req, res) => {
 //  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.username)
-  Users.deleteOne({
-    username: req.body.username
-  }), function (err) {
+  Users.findOne({username : req.body.username })
+  .then(function(user){
+    res.json(user);
+  })
+  .catch(function(err) {
     console.error(err);
+    res.status(500).send('Error: ' + error);
   });
 });
 
