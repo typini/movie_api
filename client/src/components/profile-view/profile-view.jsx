@@ -60,6 +60,20 @@ export function ProfileView(props) {
     });
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    axios.delete('https://reelcreationsdb.herokuapp.com/users/'+username, {
+      username: username
+    })
+    .then(res => {
+      const data = res.data;
+      console.log(username + " deleted.");
+    })
+    .catch(err => {
+      console.error('Error: ' + err);
+    });
+  };
+
   return (
     <div>
       <Link to={`/`}>
@@ -90,7 +104,7 @@ export function ProfileView(props) {
 
         <Form.Group controlId="formBasicPassword" className="user-field">
           <Form.Label>New Password:&nbsp;</Form.Label>
-          <Form.Control placeholder="Enter New Password" type="password" onChange={e => setNPassword(e.target.value)} />
+          <Form.Control placeholder="Enter New Password -or- leave blank" type="password" onChange={e => setNPassword(e.target.value)} />
         </Form.Group>
 
         <Form.Group controlId="formBasicSPassword" className="user-field">
@@ -98,8 +112,11 @@ export function ProfileView(props) {
           <Form.Control placeholder="Re-enter New Password" type="password" onChange={e => setNSPassword(e.target.value)} />
         </Form.Group>
 
-        <Button variant="primary" className="submit-button" type="submit" onClick={handleSubmit}>
+        <Button variant="link" className="submit-button" type="submit" onClick={handleSubmit}>
           Submit Changes
+        </Button>
+        <Button variant="link" className="delete-user-button" type="cancel" onClick={handleDelete}>
+          Delete Profile
         </Button>
       </Form>
     </div>

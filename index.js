@@ -208,7 +208,7 @@ app.post('/movies', (req, res) => {
 });
 
 app.patch('/users/:username', (req, res) => {
-  Users.findOne({username : req.params.username })
+  Users.findOne({username : req.body.username })
   .then(function(user){
     if (user) {
       let hashedPassword = "";
@@ -277,10 +277,10 @@ res.send('We are working on favorites lists.  It will be available soon. RE: ' +
 });
 
 app.delete('/users/:username', (req, res) => {
-  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.username)
-/*  Users.findOne({ 'username': req.body.username })
+//  res.send('We are working on deleting users.  In the meantime you are eternally ours. Mwahahahahahaha! RE: ' + req.params.username)
+  Users.find({ 'username': req.body.username })
   .then(function (user) {
-    Users.deleteOne({
+    user.delete({
       username: req.body.username
     });
   }
@@ -288,7 +288,6 @@ app.delete('/users/:username', (req, res) => {
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
-*/
 });
 
 /*  // For local development
