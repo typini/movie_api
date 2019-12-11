@@ -281,6 +281,7 @@ app.delete('/users/:username', (req, res) => {
   Users.findOne({username : req.body.username })
   .then(function(user){
     res.json(user);
+    user.deleteOne({username : req.body.username});
   })
   .catch(function(err) {
     console.error(err);
