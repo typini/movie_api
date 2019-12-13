@@ -256,8 +256,7 @@ app.patch('/users/favorites/:username', (req, res) => {
       })
       .then(function (u) {res.status(201).json(u) })
       .catch(function(err) {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
+        res.status(500).send('Error in /users/favorites/:username type 1: ' + err);
       });
     } else {
       return res.status(400).send(req.params.username + ' is not accessible.');
@@ -265,7 +264,7 @@ app.patch('/users/favorites/:username', (req, res) => {
   })
   .catch(function (error) {
     console.error(error);
-    res.status(500).send('Error: ' + error);
+    res.status(500).send('Error in /users/favorites/:username type 2: ' + error);
   });
 });
 
