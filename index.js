@@ -233,7 +233,6 @@ app.patch('/users/:username', (req, res) => {
       user.update(updateUserObject)
         .then(function (u) { res.status(201).json(u) })
         .catch(function (err) {
-          console.error(err);
           res.status(500).send('Error: ' + err);
         });
     } else {
@@ -241,7 +240,6 @@ app.patch('/users/:username', (req, res) => {
     }
   })
   .catch(function (error) {
-    console.error(error);
     res.status(500).send('Error: ' + error);
   });
 });
@@ -250,10 +248,11 @@ app.patch('/favorites/:username', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
   Users.findOne({username : req.params.username })
   .then(function(user) {
-    if(user){
-      user.update({
-        favorites: ["You Updated Your Favorite Movies and clicked on " + req.body.favorites]
-      })
+    if (user){
+      let updateUserFavorites = {};
+      updateUserFavorites.favorites = ["You Updated Favorites with " + req.body.favorites];
+
+      user.update(updateUserFavorites)
       .then(function (u) {res.status(201).json(u) })
       .catch(function(err) {
         res.status(500).send('Error in /users/favorites/:username type 1: ' + err);
@@ -263,7 +262,6 @@ app.patch('/favorites/:username', (req, res) => {
     }
   })
   .catch(function (error) {
-    console.error(error);
     res.status(500).send('Error in /users/favorites/:username type 2: ' + error);
   });
 });

@@ -106,6 +106,7 @@ export class MainView extends React.Component {
   postToFavorites(){
     console.log('Entering Post to Favorites');
     let u = localStorage.getItem('user');
+    console.log('From localStorage: ' + localStorage.getItem('favoritesList');
     axios.patch('https://reelcreationsdb.herokuapp.com/favorites/'+u, {
       favorites: localStorage.getItem('favoritesList') || []
     })
