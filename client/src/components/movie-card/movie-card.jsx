@@ -16,31 +16,10 @@ export class MovieCard extends React.Component {
     };
   }
 
-  postToFavorites(mId){
-    let u = localStorage.getItem('user');
-    axios.post('https://reelcreationsdb.herokuapp.com/users/'+u+'/'+mId)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  };
-
-  removeFromFavorites(mId){
-    let u = localStorage.getItem('user');
-    axios.delete('https://reelcreationsdb.herokuapp.com/users/'+u+'/'+mId)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-  };
-
   handleFavorite(mId) {
     this.setState(prevState => ({ isMovieFavorite: !prevState.isMovieFavorite }));
-    this.postToFavorites(mId);
+    localStorage.setItem('favoritesList', mId);
+    this.props.ptf();
   }
 
   render() {

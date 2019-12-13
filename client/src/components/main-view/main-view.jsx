@@ -45,6 +45,7 @@ export class MainView extends React.Component {
     
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.username);
+    localStorage.setItem('favoritesList', authData.user.favorites);
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
     this.getGenres(authData.token);
@@ -102,6 +103,20 @@ export class MainView extends React.Component {
     });
   }
 
+  postToFavorites(){
+    let u = localStorage.getItem('user');
+    axios.patch('https://reelcreationsdb.herokuapp.com/users/'+u+'/favorites', {
+      favorites: localStorage.getItem('favoritesList') || []
+    })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+
+  //onReturn is for Logging Out
   onReturn() {
     this.setState({
       token: null,
@@ -134,7 +149,7 @@ export class MainView extends React.Component {
           }
           <Route exact path="/" render={() => {
             if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m}/>)
+            return movies.map(m => <MovieCard key={m._id} movie={m} ptf={() => this.postToFavorites}/>)
             }
           }/>
           <Route path="/register" render={() =>

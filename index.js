@@ -246,12 +246,12 @@ app.patch('/users/:username', (req, res) => {
   });
 });
 
-app.patch('/users/:username/:titleId', (req, res) => {
+app.patch('/users/:username/favorites', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
   Users.findOne({ 'username': req.params.username })
   .then(function (user) {
     user.update({
-      favorites: ["You Updated Your Favorite Movies and clicked on " + req.params.titleId]
+      favorites: ["You Updated Your Favorite Movies and clicked on " + req.body.favorites]
     });
   })
   .catch(function (error) {
