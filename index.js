@@ -249,7 +249,7 @@ app.get('/favorites/:username', (req, res) => {
   Users.findOne({username : req.params.username })
   .then(function(user) {
     if (user){
-      res.status(201).json(user);
+      res.status(201).json(user.favorites);
     } else {
       return res.status(400).send(req.params.username + ' is not accessible.');
     }
