@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './profile-view.scss';
+import { MovieCard } from '../movie-card/movie-card';
 
 export function ProfileView(props) {
   if (!localStorage.getItem('user') || !localStorage.getItem('token')){
@@ -72,6 +73,7 @@ export function ProfileView(props) {
     .catch(err => {
       console.error('Error: ' + err);
     });
+    props.onReturn();
   };
 
   return (

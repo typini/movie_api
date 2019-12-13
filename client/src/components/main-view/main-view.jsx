@@ -104,7 +104,7 @@ export class MainView extends React.Component {
 
   onReturn() {
     this.setState({
-      registerUser: false,
+      token: null,
       user: null
     });
     localStorage.removeItem('token');
@@ -141,7 +141,7 @@ export class MainView extends React.Component {
             <RegistrationView />
           } />
           <Route path="/users/:userId" render={() => 
-            < ProfileView />
+            < ProfileView onReturn={() => this.onReturn()} />
           } />
           <Route path="/movies/:movieId" render={({match}) =>
             <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>
