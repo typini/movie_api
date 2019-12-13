@@ -250,9 +250,13 @@ app.patch('/users/:username/favorites', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
   Users.findOne({ 'username': req.params.username })
   .then(function (user) {
-    user.update({
-      favorites: ["You Updated Your Favorite Movies and clicked on " + req.body.favorites]
-    });
+    if(user){
+      user.update({
+        favorites: ["You Updated Your Favorite Movies and clicked on " + req.body.favorites]
+      });
+    } else {
+      return res.status(400).send(req.params.username + ' is not accessible.');
+    }
   })
   .catch(function (error) {
     console.error(error);

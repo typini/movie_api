@@ -104,6 +104,7 @@ export class MainView extends React.Component {
   }
 
   postToFavorites(){
+    console.log('Entering Post to Favorites');
     let u = localStorage.getItem('user');
     axios.patch('https://reelcreationsdb.herokuapp.com/users/'+u+'/favorites', {
       favorites: localStorage.getItem('favoritesList') || []
@@ -149,7 +150,7 @@ export class MainView extends React.Component {
           }
           <Route exact path="/" render={() => {
             if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m} ptf={() => this.postToFavorites}/>)
+            return movies.map(m => <MovieCard key={m._id} movie={m} ptf={() => this.postToFavorites()}/>)
             }
           }/>
           <Route path="/register" render={() =>
