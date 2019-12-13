@@ -248,12 +248,12 @@ app.patch('/users/:username', (req, res) => {
 
 app.post('/users/:username/:titleId', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
-  Users.findOne({ 'username': req.body.username })
+  Users.findOne({ 'username': req.params.username })
   .then(function (user) {
     user.update({
       favorites: ["You Updated Your Favorite Movies"]
     });
-  }
+  })
   .catch(function (error) {
     console.error(error);
     res.status(500).send('Error: ' + error);
