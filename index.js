@@ -158,6 +158,7 @@ app.post('/users',
       if (user) {
       return res.status(400).send(req.body.username + ' already exists.');
       } else {
+
         Users
         .create({
           username: req.body.username,
@@ -256,7 +257,7 @@ app.get('/favorites/:username', (req, res) => {
   .catch(function(err) {
     res.status(500).send('Error in /favorites/username GET type 2: ' + err);
   });
-};
+});
 
 app.patch('/favorites/:username', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
