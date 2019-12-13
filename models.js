@@ -29,7 +29,9 @@ let userSchema = mongoose.Schema({
   password : {type: String, required: true},
   email : {type: String, required: true},
   birth_date : String,
-  favorites : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }]
+// I am having issues casting favorites to a mongoose Schema, so I am using an array of strings instead.
+//  favorites : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }]
+  favorites : [ {type: String} ]
 });
 
 userSchema.statics.hashPassword = function(password){
