@@ -253,6 +253,11 @@ app.patch('/users/favorites/:username', (req, res) => {
     if(user){
       user.update({
         favorites: ["You Updated Your Favorite Movies and clicked on " + req.body.favorites]
+      })
+      .then(function (u) {res.status(201).json(u) })
+      .catch(function(err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
       });
     } else {
       return res.status(400).send(req.params.username + ' is not accessible.');
