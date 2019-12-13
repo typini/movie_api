@@ -246,7 +246,7 @@ app.patch('/users/:username', (req, res) => {
   });
 });
 
-app.post('/users/:username/favorites/:titleId', (req, res) => {
+app.post('/users/:username/:titleId', (req, res) => {
   res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
@@ -261,7 +261,7 @@ app.post('/users/:username/favorites/:titleId', (req, res) => {
 */
 });
 
-app.delete('/users/:username/favorites/:titleId', (req, res) => {
+app.delete('/users/:username/:titleId', (req, res) => {
 res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
 /*  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
