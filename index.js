@@ -248,8 +248,8 @@ app.patch('/users/:username', (req, res) => {
 
 app.patch('/favorites/:username', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
-  Users.findOne({ 'username': req.params.username })
-  .then(function (user) {
+  Users.findOne({username : req.params.username })
+  .then(function(user) {
     if(user){
       user.update({
         favorites: ["You Updated Your Favorite Movies and clicked on " + req.body.favorites]

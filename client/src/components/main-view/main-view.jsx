@@ -113,7 +113,7 @@ export class MainView extends React.Component {
       console.log(res);
     })
     .catch(err => {
-      console.error(err);
+      console.error('Error in postToFavorites: ' + err);
     });
   }
 
