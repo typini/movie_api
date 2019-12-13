@@ -244,25 +244,39 @@ app.patch('/users/:username', (req, res) => {
   });
 });
 
+app.get('/favorites/:username', (req, res) => {
+  Users.findOne({username : req.params.username })
+  .then(function(user) {
+    if (user){
+      res.status(201).json(user);
+    } else {
+      return res.status(400).send(req.params.username + ' is not accessible.');
+    }
+  })
+  .catch(function(err) {
+    res.status(500).send('Error in /favorites/username GET type 2: ' + err);
+  });
+};
+
 app.patch('/favorites/:username', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
   Users.findOne({username : req.params.username })
   .then(function(user) {
     if (user){
       let updateUserFavorites = {};
-      updateUserFavorites.favorites = ["You Updated Favorites with " + req.body.favorites];
+      updateUserFavorites.favorites = req.body.favorites;
 
       user.update(updateUserFavorites)
       .then(function (u) {res.status(201).json(u) })
       .catch(function(err) {
-        res.status(500).send('Error in /users/favorites/:username type 1: ' + err);
+        res.status(500).send('Error in /users/favorites/:username PATCH type 1: ' + err);
       });
     } else {
       return res.status(400).send(req.params.username + ' is not accessible.');
     }
   })
   .catch(function (error) {
-    res.status(500).send('Error in /users/favorites/:username type 2: ' + error);
+    res.status(500).send('Error in /users/favorites/:username PATH type 2: ' + error);
   });
 });
 
