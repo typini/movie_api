@@ -121,6 +121,9 @@ export function ProfileView(props) {
           Delete Profile
         </Button>
       </Form>
+      <div className="user-favorites">
+        {favoriteMovies.map(mov => <MovieCard key={mov._id} movie={mov} />)}
+      </div>
     </div>
   );
 }

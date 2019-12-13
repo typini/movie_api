@@ -18,7 +18,7 @@ export class MovieCard extends React.Component {
 
   postToFavorites(mId){
     let u = localStorage.getItem('user');
-    axios.post('http://realcreationsdb.herokuapp.com/'+u+'/favorites/'+mId)
+    axios.post('https://reelcreationsdb.herokuapp.com/users/'+u+'/'+mId)
     .then(res => {
       console.log(res);
     })
@@ -29,7 +29,7 @@ export class MovieCard extends React.Component {
 
   removeFromFavorites(mId){
     let u = localStorage.getItem('user');
-    axios.delete('http://realcreationsdb.herokuapp.com/'+u+'/favorites/'+mId)
+    axios.delete('https://reelcreationsdb.herokuapp.com/users/'+u+'/'+mId)
     .then(res => {
       console.log(res);
     })

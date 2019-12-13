@@ -247,10 +247,10 @@ app.patch('/users/:username', (req, res) => {
 });
 
 app.post('/users/:username/:titleId', (req, res) => {
-  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
-/*  Users.findOne({ 'username': req.body.username })
+//  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
+  Users.findOne({ 'username': req.body.username })
   .then(function (user) {
-    Users.updateOne({
+    user.update({
       favorites: ["You Updated Your Favorite Movies"]
     });
   }
@@ -258,7 +258,6 @@ app.post('/users/:username/:titleId', (req, res) => {
     console.error(error);
     res.status(500).send('Error: ' + error);
   });
-*/
 });
 
 app.delete('/users/:username/:titleId', (req, res) => {
