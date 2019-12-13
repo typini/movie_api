@@ -246,7 +246,7 @@ app.patch('/users/:username', (req, res) => {
   });
 });
 
-app.patch('/users/favorites/:username', (req, res) => {
+app.patch('/favorites/:username', (req, res) => {
 //  res.send('We are working on favorites lists.  It will be available soon. RE: ' + req.params.username + ' and ' + req.params.titleId)
   Users.findOne({ 'username': req.params.username })
   .then(function (user) {
