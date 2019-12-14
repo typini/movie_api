@@ -11,14 +11,14 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, genre, director } = this.props;
 
     if (!movie) return null;
 
     return (
       <div className="movie-view">
         <Link to={`/`}>
-          <Button variant="link">Back</Button>
+          <Button variant="link">Back to Main</Button>
         </Link>
         <img className="movie-poster" src={'http://www.tyreepini.com/webImages/' + movie.imageURL} />
         <div className="movie-information">
@@ -32,11 +32,15 @@ export class MovieView extends React.Component {
           </div>
           <div className="movie-genre">
             <span className="label">Genre Code: </span>
-            <span className="value">{movie.Genre}</span>
+            <Link to={`/genres/${movie.Genre}`}>
+              <Button className="value">{movie.Genre}</Button>
+            </Link>
           </div>
           <div className="movie-director">
             <span className="label">Director Code: </span>
-            <span className="value">{movie.Director}</span>
+            <Link to={`/directors/${movie.Director}`}>
+              <Button className="value">{movie.Director}</Button>
+            </Link>
           </div>
         </div>
       </div>

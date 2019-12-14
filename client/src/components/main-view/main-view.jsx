@@ -39,13 +39,14 @@ export class MainView extends React.Component {
 
   onLoggedIn(authData) {
     console.log(authData);
+
+    localStorage.setItem('favoritesList', authData.user.favorites || []);
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.username);
     this.setState({
       user: authData.user.username,
     });
-    
-    localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.username);
-    localStorage.setItem('favoritesList', authData.user.favorites);
+
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
     this.getGenres(authData.token);
@@ -66,7 +67,6 @@ export class MainView extends React.Component {
       this.setState({
         movies: response.data
       });
-      console.log("These are you movies\n" + response.data);
     })
     .catch(error => {
       console.log(error);
@@ -103,21 +103,6 @@ export class MainView extends React.Component {
     });
   }
 
-  postToFavorites(){
-    console.log('Entering Post to Favorites');
-    let u = localStorage.getItem('user');
-    console.log('From localStorage: ' + localStorage.getItem('favoritesList'));
-    axios.patch('https://reelcreationsdb.herokuapp.com/favorites/'+u, {
-      favorites: localStorage.getItem('favoritesList') || []
-    })
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.error('Error in postToFavorites: ' + err);
-    });
-  }
-
   //onReturn is for Logging Out
   onReturn() {
     this.setState({
@@ -126,6 +111,7 @@ export class MainView extends React.Component {
     });
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('favoritesList');
   }
 
   render() {
@@ -151,9 +137,9 @@ export class MainView extends React.Component {
           }
           <Route exact path="/" render={() => {
             if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m} ptf={() => this.postToFavorites()}/>)
-            }
-          }/>
+            return movies.map(m => <MovieCard key={m._id} movie={m} />);
+          }
+          } />
           <Route path="/register" render={() =>
             <RegistrationView />
           } />
@@ -161,7 +147,9 @@ export class MainView extends React.Component {
             < ProfileView onReturn={() => this.onReturn()} />
           } />
           <Route path="/movies/:movieId" render={({match}) =>
-            <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>
+            <MovieView
+              movie={movies.find(m => m._id === match.params.movieId)}
+            />
           } />
           <Route path="/genres/:genreId" render={({match}) => 
             <GenreView

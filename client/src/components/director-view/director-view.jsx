@@ -18,7 +18,7 @@ export class DirectorView extends React.Component {
     if (!director || director._id === ""){
       return (
         <Link to={`/`}>
-          <Button variant="link">No Data! Go Back</Button>
+          <Button variant="link">Data Missing!  Back to Main</Button>
         </Link>
       );
     }
@@ -26,7 +26,7 @@ export class DirectorView extends React.Component {
     return (
       <div className="director-view">
         <Link to={`/`}>
-          <Button variant="link">Back</Button>
+          <Button variant="link">Back to Main</Button>
         </Link>
         <div className="director-information">
           <div className="director-name">

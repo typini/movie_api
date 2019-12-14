@@ -46,37 +46,37 @@ export function RegistrationView(props) {
       <Form.Group controlId="formRegistrationUsername">
         <Form.Label>
           New Username:&nbsp;
-          <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+          <Form.Control className="user-field" type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
         </Form.Label>
       </Form.Group>
       <Form.Group controlId="formRegistrationName">
         <Form.Label>
           Your Name:&nbsp;
-          <Form.Control type="text" placeholder="Enter your name" value={name} onChange={e => setName(e.target.value)} />
+          <Form.Control className="user-field" type="text" placeholder="Enter your name" value={name} onChange={e => setName(e.target.value)} />
         </Form.Label>
       </Form.Group>
       <Form.Group controlId="formRegistrationEmail">
         <Form.Label>
           Your email address:&nbsp;
-          <Form.Control type="text" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} />
+          <Form.Control className="user-field" type="text" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} />
         </Form.Label>
       </Form.Group>
       <Form.Group controlId="formRegistrationBirthdate">
         <Form.Label>
           Your Birthdate:&nbsp;
-          <Form.Control type="text" placeholder="Enter your birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
+          <Form.Control className="user-field" type="text" placeholder="Enter your birthdate" value={birthdate} onChange={e => setBirthdate(e.target.value)} />
         </Form.Label>
       </Form.Group>
       <Form.Group controlId="formRegistrationPassword">
         <Form.Label>
           Enter New Password:&nbsp;
-          <Form.Control type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)} />
+          <Form.Control className="user-field" type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)} />
         </Form.Label>
       </Form.Group>
       <Form.Group controlId="formRegistrationRPassword">
         <Form.Label>
           Retype Password:&nbsp;
-          <Form.Control type="password" placeholder="Re-enter password" value={rPassword} onChange={e => setRPassword(e.target.value)} />
+          <Form.Control className="user-field" type="password" placeholder="Re-enter password" value={rPassword} onChange={e => setRPassword(e.target.value)} />
         </Form.Label>
       </Form.Group>
       <Form.Group controlId="formRegistrationButtons">

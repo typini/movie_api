@@ -18,7 +18,7 @@ export class GenreView extends React.Component {
     return (
       <div className="genre-view">
         <Link to={`/`}>
-          <Button variant="link">Back</Button>
+          <Button variant="link">Back to Main</Button>
         </Link>
         <div className="genre-information">
           <div className="genre-name">

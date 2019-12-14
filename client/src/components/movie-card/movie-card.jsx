@@ -11,15 +11,48 @@ export class MovieCard extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isMovieFavorite: false
-    };
+    let a = localStorage.getItem('favoritesList') || [];
+    if (a.indexOf(this.props.movie._id) === -1) {
+      this.state = {
+        isMovieFavorite: false
+      }
+    } else {
+      this.state = {
+        isMovieFavorite: true
+      }
+    }
+  }
+
+  ptDB(favoritesArray){
+    console.log('Patching to Database');
+    console.log(favoritesArray);
+    console.log(typeof favoritesArray);
+    let u = localStorage.getItem('user');
+    axios.patch('https://reelcreationsdb.herokuapp.com/favorites/'+u, {
+      favorites: favoritesArray
+    })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.error(err);
+    });
   }
 
   handleFavorite(mId) {
-    this.setState(prevState => ({ isMovieFavorite: !prevState.isMovieFavorite }));
-    localStorage.setItem('favoritesList', mId);
-    this.props.ptf();
+    let storageArray = localStorage.getItem('favoritesList').split(",");
+    if (storageArray.indexOf(mId) === -1){
+      this.setState({isMovieFavorite: true});
+      let tempList = [];
+      tempList.push(mId);
+      storageArray.push(tempList[0]);
+    } else {
+      this.setState({isMovieFavorite: false});
+      console.log("Already on the list.");
+      storageArray.splice(storageArray.indexOf(mId), 1);
+    }
+    localStorage.setItem('favoritesList', storageArray.toString());
+    this.ptDB(storageArray);
   }
 
   render() {
@@ -29,7 +62,7 @@ export class MovieCard extends React.Component {
     //const { Button } = '../button/button';
 
     return (
-      <Card style={{ width: '10rem' }}>
+      <Card style={{ width: '11.5rem' }}>
         <Card.Img className={`${isMovieFavorite ? "favorite" : ""}`} variant="top" src={'http://www.tyreepini.com/webImages/'+movie.imageURL} onClick={()=>this.handleFavorite(movie._id)} />
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>

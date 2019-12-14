@@ -16,6 +16,9 @@ export function ProfileView(props) {
       </div>);
   }
 
+  let movieArray = localStorage.getItem('favoritesList').split(',');
+  let setFMovies = [];
+
   const username = localStorage.getItem('user');
   const token = localStorage.getItem('token');
   const [ name, setName ] = useState('');
@@ -23,6 +26,27 @@ export function ProfileView(props) {
   const [ birthdate, setBirthdate ] = useState('');
   const [ nPassword, setNPassword ] = useState('');
   const [ nSPassword, setNSPassword ] = useState('');
+  const [ movieArrayElements, setMovieArrayElements ] = useState('');
+
+  const checkFavorites = i => {
+    console.log(i + " " + i._id + " : " + movieArray.includes(i._id));
+    return movieArray.includes(i._id);
+  }
+
+  const getFavoriteMovies = (token) => {
+    axios.get('https://reelcreationsdb.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      setFMovies = response.data.filter(checkFavorites);
+      setMovieArrayElements(setFMovies.map(item => 
+        <MovieCard key={item._id} movie={item}/>
+      ));
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
 
   const getAccountInfo = (token) => {
     axios.get('https://reelcreationsdb.herokuapp.com/users/'+username, {
@@ -39,7 +63,10 @@ export function ProfileView(props) {
     });
   }
 
-  useEffect(() => { getAccountInfo(); }, []);
+  useEffect(() => {
+    getAccountInfo();
+    getFavoriteMovies(token);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,7 +106,7 @@ export function ProfileView(props) {
   return (
     <div>
       <Link to={`/`}>
-        <Button variant="link">Back</Button>
+        <Button variant="link">Back to Main</Button>
       </Link>
       {/*<form className="update-profile" onSubmit={this.handleSubmit>*/}
       <Form className="update-profile">
@@ -114,12 +141,18 @@ export function ProfileView(props) {
           <Form.Control placeholder="Re-enter New Password" type="password" onChange={e => setNSPassword(e.target.value)} />
         </Form.Group>
 
+        <br />
+
         <Button variant="link" className="submit-button" type="submit" onClick={handleSubmit}>
           Submit Changes
         </Button>
         <Button variant="link" className="delete-user-button" type="cancel" onClick={handleDelete}>
           Delete Profile
         </Button>
+        <Form.Group controlId="formBasicsFavorites">
+          <Form.Label>Favorite Movies:&nbsp;</Form.Label>
+          <div>{movieArrayElements}</div>
+        </Form.Group>
       </Form>
     </div>
   );
