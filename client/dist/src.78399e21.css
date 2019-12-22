@@ -1,0 +1,168 @@
+* {
+  font-family: Alata;
+  color: #fffff7;
+  line-height: 1.35;
+}
+
+body {
+  background: #630101;
+}
+
+.card {
+  display: inline-grid;
+  align-items: stretch;
+  margin: 10px;
+  background: #4B0A08;
+}
+
+.card-body {
+  width: 100%;
+  background: #4B0A08;
+}
+
+.card-text {
+  font-size: 0.85em;
+}
+
+.btn {
+  background-color: rgba(255, 255, 200, 0.3);
+}
+
+.btn-link {
+  display: flex;
+  justify-content: center;
+  color: #fffff7;
+  text-shadow: 0px 0px 7px #fffff7;
+}
+
+.favorite {
+  box-shadow: 0px 0px 8px 8px rgba(255, 230, 230, 0.7);
+}
+
+btn-link:hover {
+  color: #A97474;
+}
+.registration {
+  margin: 30px;
+}
+
+.user-field {
+  max-width: 500px;
+}
+
+.register-prompt {
+  text-align: center;
+}
+* {
+  margin: auto;
+}
+
+label, button {
+  display: block;
+  line-height: 150%;
+  font-size: 1.2em;
+  text-align: center;
+  margin: auto;
+  margin-top: 25px;
+}
+
+button, input {
+  color: #333;
+}
+
+.user-field {
+  margin: auto;
+  max-width: 500px;
+}
+
+.toCenter {
+  display: inline-block;
+  text-align: center;
+}
+
+.login {
+  margin: auto;
+  padding: 30px;
+}
+
+.welcome {
+  text-align: center;
+}
+img {
+  padding: 3px;
+}
+
+.movie-poster {
+  display: flex;
+  justify-content: center;
+  max-width: 380px;
+  border: 10px black;
+}
+
+.movie-information {
+  width: 250px;
+}
+
+.movie-information > div {
+  padding: 5px;
+}
+
+.movie-information:first-child {
+  padding-top: 20px;
+}
+.director-information {
+  padding: 50px;
+}
+
+.director-movies {
+  padding: 10px 30px;
+}
+.genre-information {
+  padding: 50px;
+}
+
+.genre-movies {
+  padding: 10px 30px;
+}
+.user-field {
+  max-width: 500px;
+}
+
+.update-profile {
+  margin: 10px 50px;
+  line-height: 1.8;
+}
+
+.submit-button {
+  margin-top: 20px;
+}
+
+.error-message {
+  text-align: center;
+  margin: 40px;
+  font-size: 1.8rem;
+}
+
+#formBasicUsernameDisabled {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: rgba(0, 0, 0, 0.5) 2px solid;
+  color: white;
+}
+.log-out {
+  margin: 15px 15px 20px 15px;
+}
+
+.btn {
+  margin: 3px auto;
+}
+
+.main-view {
+  margin: 20px;
+  text-align: center;
+}
+.reel-creations {
+  font-family: "Alata", sans-serif;
+  color: steelblue;
+}
+
+/*# sourceMappingURL=/src.78399e21.css.map */
