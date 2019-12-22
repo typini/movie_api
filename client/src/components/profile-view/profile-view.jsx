@@ -82,7 +82,7 @@ export function ProfileView(props) {
       const data = res.data;
       console.log("You just modified " + username + ".  See details below.");
       console.log(data);
-      window.open('/client/');
+      window.open('/client', '_self');
     })
     .catch(err => {
       console.error('Error: ' + err);
