@@ -3,8 +3,15 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+import { setMovies } from '../../actions/actions';
+import { setDirectors } from '../../actions/actions';
+import { setGenres } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -14,14 +21,11 @@ import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 import './main-view.scss';
 
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     super();
     this.state = {
-      movies: [],
-      directors: [],
-      genres: [],
-      user: null,
+      user: null
     };
   }
 
@@ -38,14 +42,13 @@ export class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
+    this.setState({
+      user: authData.user.username,
+    });
 
     localStorage.setItem('favoritesList', authData.user.favorites || []);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.username);
-    this.setState({
-      user: authData.user.username,
-    });
 
     this.getMovies(authData.token);
     this.getDirectors(authData.token);
@@ -64,12 +67,10 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      this.setState({
-        movies: response.data
-      });
+      this.props.setMovies(response.data);
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
     });
   }
 
@@ -78,13 +79,10 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      this.setState({
-        directors: response.data
-      });
-      console.log(response.data);
+      this.props.setDirectors(response.data);
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
     });
   }
 
@@ -93,13 +91,10 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      this.setState({
-        genres: response.data
-      });
-      console.log(response.data);
+      this.props.setGenres(response.data);
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
     });
   }
 
@@ -116,14 +111,16 @@ export class MainView extends React.Component {
 
   render() {
     //The following line is ES6 example
-    const { movies, user, directors, genres } = this.state;
+    let { user } = this.state;
+    let { movies, directors, genres } = this.props;
     //It replaces this from ES5...
     //var movies = this.state.movies;
+    //etc.
 
     if(!movies) return <div className="main-view"/>;
 
     return (
-      <Router>
+      <Router basename="/client">
         <div className="main-view">
           {user &&
             <Link to={`/users/${localStorage.getItem('user')}`}>
@@ -137,9 +134,8 @@ export class MainView extends React.Component {
           }
           <Route exact path="/" render={() => {
             if(!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m} />);
-          }
-          } />
+            return <MoviesList movies={movies}/>;
+          }} />
           <Route path="/register" render={() =>
             <RegistrationView />
           } />
@@ -168,3 +164,13 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return {
+    movies: state.movies,
+    directors: state.directors,
+    genres: state.genres
+  }
+}
+
+export default connect(mapStateToProps, { setMovies, setDirectors, setGenres } )(MainView);

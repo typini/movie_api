@@ -1,5 +1,6 @@
 const express = require('express'),
-  cors = require('cors');
+  path = require('path'),
+  cors = require('cors'),
   morgan = require('morgan'),
   mongoose = require('mongoose'),
   Models = require('./models.js'),
@@ -43,6 +44,10 @@ mongoose.connect('mongodb+srv://typini:*@tyreepini-tuvz3.mongodb.net/ReelCreatio
 
 app.use(morgan('common'));
 app.use(express.static('public'));
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
+app.get("client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use(bodyParser.json());
 var auth = require('./auth')(app);
 app.use(function (err, req, res, next) {

@@ -25,8 +25,6 @@ export class MovieCard extends React.Component {
 
   ptDB(favoritesArray){
     console.log('Patching to Database');
-    console.log(favoritesArray);
-    console.log(typeof favoritesArray);
     let u = localStorage.getItem('user');
     axios.patch('https://reelcreationsdb.herokuapp.com/favorites/'+u, {
       favorites: favoritesArray
