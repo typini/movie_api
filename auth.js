@@ -3,6 +3,13 @@ let jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('./passport');
 
+/**
+* Generates JWT Token
+* @function generateJWTToken
+* @param object user
+* @returns string Token
+*/
+
 function generateJWTToken(user) {
 	console.log("***USER***" + user);
 	return jwt.sign(user, jwtSecret, {
@@ -11,6 +18,13 @@ function generateJWTToken(user) {
 		algorithm: 'HS256'
 	});
 }
+
+/**
+* Module exports user Tokens
+* @exports exports
+* @param object router
+* @returns object user/Token
+*/
 
 module.exports = (router) => {
 	router.post('/login', (req, res) => {
